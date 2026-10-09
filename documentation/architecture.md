@@ -1,17 +1,27 @@
-# Architecture
+# Ice Station Analytics Architecture
 
-## Initial learning architecture
+## Data provisioning
 
-Synthetic SQL seed data → PostgreSQL relational database → SQL analysis/views → Power BI semantic model and reports → documented business findings.
+Version-controlled schema and generator SQL in this repository → `psql` setup script → local PostgreSQL `ice_station_v2` database → analyst SQL and validation → Power BI semantic model/reports → documented business findings.
 
-## Initial entities
+GitHub stores code, setup scripts, documentation and project history. It does not store the live PostgreSQL database or generated bulk rows.
+
+## Tables in v0.2
 
 - `customers`: customer profile and location
 - `products`: product catalogue and category
 - `stores`: physical store and region metadata
-- `orders`: order header, date, channel, status, customer, and store
-- `order_items`: product-level quantity, price, and discount
+- `orders`: order header, date, channel, status, customer and optional store
+- `order_items`: product-level quantity, price and discount
+- `payments`: payment status, method, amount and transaction reference
+- `returns`: item-level returned quantities and refund amounts
+- `inventory_movements`: stock ledger for opening inventory, sales, returns, purchases and adjustments
+
+## Database environments
+
+- `ice_station`: original small v0.1 sample retained as a reference.
+- `ice_station_v2`: large v0.2 synthetic dataset for the main training workflow.
 
 ## Planned extensions
 
-Later releases may introduce payments, returns, inventory snapshots, marketing campaigns, and source-system extracts. These will be added through explicit schema changes and migration scripts rather than silently changing the meaning of existing fields.
+Future releases may add marketing campaign data, source-system CSV imports, schema migrations, date-partitioning exercises, and incremental loads. Changes must be explicit and documented rather than silently changing existing field meanings.

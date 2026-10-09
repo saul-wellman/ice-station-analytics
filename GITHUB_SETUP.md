@@ -1,43 +1,31 @@
-# Publish Ice Station to GitHub (Windows)
+# GitHub workflow for Ice Station
 
-Repository: https://github.com/saul-wellman/ice-station-analytics
+The initial repository has already been created. On your current computer, the local folder should have `origin` pointing to `https://github.com/saul-wellman/ice-station-analytics.git`.
 
-## 1. Install Git
+## Get the latest company code
 
-Install Git for Windows if `git --version` is not recognized:
-https://git-scm.com/download/win
-
-## 2. Extract the ZIP
-
-Extract this ZIP. Open the `Ice-Station-Analytics` folder that contains `README.md`.
-
-In File Explorer, click the address bar, type `cmd`, and press Enter to open Command Prompt in that folder.
-
-## 3. Initialize and push the first commit
-
-Run these commands one at a time:
+From the repository root in Git Bash:
 
 ```bash
-git init -b main
-git add .
-git commit -m "chore: initialize Ice Station analytics codebase"
-git remote add origin https://github.com/saul-wellman/ice-station-analytics.git
-git push -u origin main
+git pull origin main
 ```
 
-When prompted, complete GitHub authentication in the browser or credential manager. Do not share your password or access token in chat.
-
-If Git says your name and email are not configured, set them using the name/email you want associated with commits:
+## Save your work
 
 ```bash
-git config --global user.name "Your Name"
-git config --global user.email "your-github-noreply-email"
+git status
+git add path/to/your/changed/file
+git commit -m "feat(sql): describe the business change"
+git push origin main
 ```
 
-Then repeat the `git commit` command.
+Stage only the files related to your ticket. Never commit passwords, credentials, private data, or generated bulk data exports.
 
-## 4. Verify
+## New computer onboarding
 
-Refresh the repository page. You should see `README.md`, `onboarding/`, `database/`, `documentation/`, `projects/`, `sql/`, and `powerbi/`.
+```bash
+git clone https://github.com/saul-wellman/ice-station-analytics.git
+cd ice-station-analytics
+```
 
-This creates your initial version-controlled commit. Later tickets will result in additional commits.
+Then read `README.md` and `onboarding/README.md`. For a fresh PostgreSQL environment, follow the large-data setup steps in `documentation/v0.2-large-data-environment.md`.

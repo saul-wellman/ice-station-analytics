@@ -1,0 +1,9 @@
+\set ON_ERROR_STOP on
+\echo 'Building Ice Station v0.2 schema and synthetic company data...'
+BEGIN;
+\i database/schema/001_initial_schema.sql
+\i database/schema/002_operational_tables.sql
+\i database/generation/010_generate_large_dataset.sql
+\i database/validation/020_post_load_checks.sql
+COMMIT;
+\echo 'Ice Station v0.2 build completed.'

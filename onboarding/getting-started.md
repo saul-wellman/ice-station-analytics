@@ -1,42 +1,45 @@
-# Getting Started
+# Getting Started at Ice Station
 
-## 1. Install tools
+## Tools
 
-Install PostgreSQL (version 16 or later is recommended), pgAdmin or another SQL client, Git, and Power BI Desktop.
+- PostgreSQL 18 and its command-line tools (`psql`, `createdb`)
+- pgAdmin for browsing tables and inspecting records
+- Git Bash and Git for Windows
+- Power BI Desktop for reporting work
 
-## 2. Create the database
+## Get the current codebase
 
-In pgAdmin, connect to your local PostgreSQL server and create a database named `ice_station`.
-
-Alternatively, from a terminal where `psql` is available:
+From the local repository root:
 
 ```bash
-createdb -U postgres ice_station
+git pull origin main
 ```
 
-## 3. Run the SQL files in order
+## Database environments
 
-Run these files against the `ice_station` database:
+- `ice_station` is the small v0.1 sample database already created during initial onboarding. Keep it as a reference.
+- `ice_station_v2` is the larger v0.2 working dataset for realistic analysis practice.
 
-1. `database/schema/001_initial_schema.sql`
-2. `database/seed/002_seed_data.sql`
-3. `database/validation/003_smoke_tests.sql`
+## Build the large database from repository code
 
-In pgAdmin, open each file in Query Tool and execute it. The seed script uses `INSERT` statements and can be rerun only after the tables are emptied or the database is recreated.
+From Git Bash at the repository root, run:
 
-## 4. Confirm setup
+```bash
+bash scripts/setup_large_dataset.sh
+```
 
-The validation script reports row counts and checks for orphan order items. Investigate any unexpected result rather than ignoring it.
+Enter the PostgreSQL password for the local `postgres` account when prompted. The script creates `ice_station_v2`, runs the checked-in schema and generation SQL via `psql`, and validates expected counts. It refuses to overwrite an existing database and leaves `ice_station` unchanged.
 
-## 5. Connect Power BI later
+The script assumes PostgreSQL 18 command-line tools are installed at `/c/Program Files/PostgreSQL/18/bin`. If your installation uses a different path, set `PG_BIN` to its `bin` folder when invoking the script.
 
-In Power BI Desktop, choose **Get data → PostgreSQL database**, enter your server (usually `localhost`) and database (`ice_station`), then select Import or DirectQuery. For this learning project, start with **Import** unless a ticket asks you to compare modes.
+## Explore with pgAdmin
 
-If Power BI cannot connect, confirm that PostgreSQL is running and that you have the correct host, port (usually 5432), database, username, and password. Never put your database password in GitHub.
+After setup completes, refresh the server tree in pgAdmin and expand:
 
-## Troubleshooting
+`Servers → PostgreSQL 18 → Databases → ice_station_v2 → Schemas → public → Tables`
 
-- **Database does not exist:** create `ice_station` first.
-- **Permission denied:** use a database role with permission to create/read tables.
-- **Relation already exists:** the schema was already run; use a fresh practice database or inspect the existing tables before rerunning.
-- **CSV/SQL encoding issue:** use UTF-8.
+Right-click a table and choose **View/Edit Data → All Rows** to inspect sample records. Do not edit source records during familiarisation.
+
+## Safety
+
+Never put a database password in GitHub, SQL source files, or chat. Do not run the large setup script against your small `ice_station` database. Use only the dedicated `ice_station_v2` target.
