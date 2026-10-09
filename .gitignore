@@ -1,0 +1,21 @@
+# Local environment and secrets
+.env
+*.local
+secrets/
+*.pem
+*.key
+
+# Python/cache
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Power BI temporary/backup artifacts
+*.pbit.lock
+*.pbix~
